@@ -1,0 +1,50 @@
+.order-wrapper {
+  width: 60%;
+  position: relative;
+}
+.order-overflow-wrapper {
+  height: 405px;
+  overflow: hidden scroll;
+}
+.order-table {
+  box-sizing: border-box;
+  width: 100%;
+}
+.order-td {
+  height: 45px;
+  padding: 4.5px 8px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
+.order-price {
+  display: block;
+  font-size: 13px;
+}
+.order-price > span {
+  font-size: 11px;
+}
+.high-price {
+  color: #c84a31;
+  background-color: rgba(18, 97, 196, 0.08);
+  text-align: right;
+}
+.low-price {
+  color: #0062df;
+  background-color: rgba(200, 74, 49, 0.08);
+  text-align: right;
+}
+.order-quantity {
+  color: #333 !important;
+  font-size: 14px;
+  padding: 10px;
+}
+.total {
+  background-color: #f9fafc;
+}
+.total-table {
+  width: 100%;
+  height: 42px;
+  text-align: center;
+  font-size: 13px;
+  border: 1px solid #ffffff;
+}

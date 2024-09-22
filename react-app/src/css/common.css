@@ -1,0 +1,50 @@
+.css-6osa3l {
+  z-index: 100;
+  background-image: initial;
+  background-position: initial;
+  background-size: initial;
+  background-repeat: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  overflow: unset;
+  height: auto;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 1400px;
+  margin-bottom: -60px;
+  position: sticky;
+  top: 0px;
+  border-bottom: 0px;
+  background: linear-gradient(
+      180deg,
+      #241355,
+      #131c5559 61.77988648414612%,
+      #131c5500
+    ),
+    linear-gradient(270deg, #0f0627, #0f0627);
+  color: white;
+}
+.css-rnhepa {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0px;
+  box-sizing: border-box;
+  width: 1400px;
+  height: 60px;
+  margin: 0px auto;
+  padding: 0px 20px;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#scroll-footer {
+  padding: 40px;
+}

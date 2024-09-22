@@ -1,0 +1,118 @@
+.side-bar,
+.side-bar * {
+  box-sizing: border-box;
+}
+.side-bar {
+  background: linear-gradient(
+      180deg,
+      rgba(36, 19, 85, 1) 0%,
+      rgba(19, 28, 85, 0.35) 61.77988648414612%,
+      rgba(19, 28, 85, 0) 100%
+    ),
+    linear-gradient(to left, #0f0627, #0f0627);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 256px;
+  height: 920px;
+  position: relative;
+  overflow: hidden;
+}
+.side-bar .header {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-width: 0px 0px 1px 0px;
+  padding: 16px 0px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.side-bar .logo-instance {
+  flex-shrink: 0 !important;
+}
+.side-bar .main {
+  padding: 0px 16px 0px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+}
+.side-bar .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 360px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  height: 820px;
+  overflow-y: scroll;
+}
+.side-bar .links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.side-bar .menu-item-instance {
+  align-self: stretch !important;
+  flex-shrink: 0 !important;
+  width: unset !important;
+}
+.side-bar .footer {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-width: 1px 0px 0px 0px;
+  padding: 20px 16px 20px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.side-bar .user-instance {
+  flex-shrink: 0 !important;
+}
+
+/* nested override styles */
+.side-bar .icon-settings-instance {
+  flex-shrink: 0 !important;
+}
+.side-bar .icon-book-open-instance {
+  flex-shrink: 0 !important;
+}
+.side-bar .icon-bookmark-instance {
+  flex-shrink: 0 !important;
+}
+.side-bar .icon-database-instance {
+  flex-shrink: 0 !important;
+}
+.side-bar .icon-folder-instance {
+  flex-shrink: 0 !important;
+}
+.tab-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}

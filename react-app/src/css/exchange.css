@@ -1,0 +1,12 @@
+.exchange-wrapper {
+  display: flex;
+  gap: 15px;
+}
+.left-wrapper {
+  width: 80%;
+}
+.components-wrapper {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
