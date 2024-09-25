@@ -180,3 +180,15 @@ em.logo {
   padding: 16px 0px 8px;
   border-bottom: 1px solid var(--theme-colors-line_2);
 }
+
+.middle-block-title {
+  font-size: 34px;
+  line-height: 1rem;
+  padding: 0.5rem 0px;
+  text-transform: uppercase;
+  color: rgb(0, 0, 0);
+  font-family: "Motiva Sans Light";
+  letter-spacing: -1px;
+  font-weight: 500;
+  font-family: Roboto, "Noto Sans KR", "sans-serif", Arial, Helvetica;
+}

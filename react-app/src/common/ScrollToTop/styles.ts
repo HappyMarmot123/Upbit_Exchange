@@ -5,7 +5,7 @@ export const ScrollWrapper = styled("div")`
   flex-direction: column;
   gap: 5px;
   position: fixed;
-  right: 30px;
+  left: 30px;
   bottom: 30px;
   z-index: 10;
 `;

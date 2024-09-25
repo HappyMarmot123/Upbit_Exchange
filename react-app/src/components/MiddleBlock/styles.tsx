@@ -12,7 +12,7 @@ export const MiddleBlockSection = styled("section")`
     no-repeat center;
 
   @media screen and (max-width: 1024px) {
-    padding: 5rem 0 1rem;
+    padding: 4rem 0 3rem;
   }
 `;
 

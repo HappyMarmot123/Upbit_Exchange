@@ -51,7 +51,7 @@ const ScrollToTop = () => {
   };
 
   return (
-    <ScrollWrapper>
+    <ScrollWrapper id="sticky-remote-controller">
       <ScrollUpContainer onClick={themeChange} show={showScroll}>
         <Div>테마</Div>
       </ScrollUpContainer>

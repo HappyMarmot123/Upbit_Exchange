@@ -232,7 +232,7 @@ span.first em {
   gap: 10px;
 }
 .css-5cufzs a:nth-of-type(1) {
-  width: 124px;
+  flex: 1 auto;
   background-color: rgb(153, 153, 153);
 }
 .css-1xupxm9 {
@@ -254,6 +254,10 @@ span.first em {
   color: rgb(255, 255, 255);
 }
 .css-5cufzs a:nth-of-type(2) {
-  width: 328px;
+  /* width: 100%; */
+  flex: 100 auto;
   background-color: #c84a31;
+}
+.cancel-order {
+  display: none;
 }

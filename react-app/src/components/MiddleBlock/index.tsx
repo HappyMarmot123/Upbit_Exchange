@@ -45,18 +45,7 @@ const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
         <Row justify="center" align="middle">
           <ContentWrapper>
             <Col lg={24} md={24} sm={24} xs={24}>
-              <h6
-                style={{
-                  fontSize: "20px",
-                  lineHeight: "1rem",
-                  padding: "0.5rem 0px",
-                  textTransform: "uppercase",
-                  color: "rgb(0, 0, 0)",
-                  fontFamily: "Motiva Sans Light",
-                }}
-              >
-                {t(title)}
-              </h6>
+              <h1 className="middle-block-title">{t(title)}</h1>
               <Content>{t(content)}</Content>
               {button && (
                 <>

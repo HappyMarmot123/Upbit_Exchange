@@ -111,6 +111,12 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
     return removeDot;
   };
 
+  const handleFieldValue = () => {
+    setPurchase("0");
+    setOrderQuantity("0");
+    setOrderPrice("0");
+  };
+
   const handleValidate = async () => {
     if (parseInt(purchase) <= 0 || purchase === "") {
       setContent("매수가격을 입력해주세요.");
@@ -124,7 +130,15 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
       setContent("주문총액을 입력해주세요.");
       return openModal();
     }
+    if (parseInt(orderPrice) >= 10000) {
+      setContent("주문 총액은 1만원 미만으로 제한하고 있습니다.");
+      return openModal();
+    }
 
+    submitForm();
+  };
+
+  const submitForm = () => {
     const formData = new FormData();
     formData.append("market", ticker.code);
     formData.append("side", "bid");
@@ -132,23 +146,24 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
     formData.append("price", orderPrice);
     formData.append("ord_type", "limit");
 
-    const data = {
-      market: ticker.code,
-      side: "bid",
-      volume: orderQuantity,
-      price: orderPrice,
-      ord_type: "limit",
-    };
-
     axios
       .post("/v1/orders", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((response) => {
+      .then((response: any) => {
         console.log(response);
-        // {"error":{"message":"최소주문금액 이상으로 주문해주세요","name":"under_min_total_bid"}}
+        if (response?.data?.error?.name === "under_min_total_bid") {
+          setModalOpen(true);
+          setContent("최소주문금액 이상으로 주문해주세요");
+          return;
+        }
+        if (response.status === 201) {
+          setModalOpen(true);
+          setContent("주문이 완료되었습니다.");
+          return;
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -244,7 +259,11 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
             </div>
           </div>
           <div className="css-5cufzs">
-            <a title="초기화" className="css-1xupxm9">
+            <a
+              title="초기화"
+              className="css-1xupxm9"
+              onClick={handleFieldValue}
+            >
               초기화
             </a>
             <a
