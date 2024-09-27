@@ -5,13 +5,27 @@ import ModalWrapper from "./ModalWrapper";
 interface PropType {
   title: string;
   content: string;
+  confirm?: boolean;
+  handleNext?: () => void;
   closeModal: () => void;
 }
 
-const ModalPopup = ({ title, content, closeModal }: PropType) => {
-  const agree = useCallback(() => {
+const ModalPopup = ({
+  title,
+  content,
+  confirm,
+  handleNext,
+  closeModal,
+}: PropType) => {
+  const close = useCallback(() => {
     if (closeModal) {
       closeModal();
+    }
+  }, []);
+
+  const agree = useCallback(() => {
+    if (handleNext) {
+      handleNext();
     }
   }, []);
 
@@ -29,11 +43,26 @@ const ModalPopup = ({ title, content, closeModal }: PropType) => {
         {content}
       </div>
       <div style={{ display: "flex", gap: "15px" }}>
-        <Button
-          text={`확인`}
-          onClick={agree}
-          buttonStyle={{ marginTop: "30px" }}
-        ></Button>
+        {confirm ? (
+          <>
+            <Button
+              text={`확인`}
+              onClick={agree}
+              buttonStyle={{ marginTop: "30px" }}
+            ></Button>
+            <Button
+              text={`취소`}
+              onClick={close}
+              buttonStyle={{ marginTop: "30px" }}
+            ></Button>
+          </>
+        ) : (
+          <Button
+            text={`확인`}
+            onClick={close}
+            buttonStyle={{ marginTop: "30px" }}
+          ></Button>
+        )}
       </div>
     </ModalWrapper>
   );

@@ -182,7 +182,9 @@ const Exchange = () => {
           />
           <div className="components-wrapper">
             {marketOrder && <OrderBook order={marketOrder} />}
-            {marketTicker && <Ticker ticker={marketTicker} />}
+            {marketTicker && (
+              <Ticker ticker={marketTicker} socketRef2={socketRef2} />
+            )}
           </div>
         </div>
         <SideBar marketData={marketData} />

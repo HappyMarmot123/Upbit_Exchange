@@ -21,11 +21,7 @@ const Home = () => {
   const [showup, setShowup] = useState(false);
 
   useEffect(() => {
-    if (
-      contextValue.depositStatus === "ACCEPTED" ||
-      (contextValue.depositStatus === "REJECTED" &&
-        contextValue.openExchange === "true")
-    ) {
+    if (contextValue.openExchange === "true") {
       setShowup(true);
     }
   }, [contextValue]);

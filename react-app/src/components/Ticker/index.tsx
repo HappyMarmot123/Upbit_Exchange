@@ -5,6 +5,8 @@ import React from "react";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import ModalPopup from "../Modal/ModalPopup";
 import axios from "axios";
+import { Bounce, ToastContainer, toast, cssTransition } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface TickerProps {
   ticker: {
@@ -15,9 +17,10 @@ interface TickerProps {
     low_price: number; //당일저가
     trade_price: number; //현재가
   };
+  socketRef2: any;
 }
 
-const Ticker = ({ ticker }: TickerProps): JSX.Element => {
+const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
   const context = useContext(ContextModule);
 
   if (!context) {
@@ -31,11 +34,13 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
   );
   const [title, setTitle] = useState("매수 안내");
   const [content, setContent] = useState("");
+  const [useConfirm, setUseConfirm] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [purchase, setPurchase] = useState("0");
   const [orderQuantity, setOrderQuantity] = useState("0");
   const [orderPrice, setOrderPrice] = useState("0");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [tradeInfo, seTradeInfo] = useState({});
 
   useEffect(() => {
     const chase = parseInt(removeComma(purchase));
@@ -59,6 +64,11 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
   };
   const closeModal = () => {
     setModalOpen(false);
+    setUseConfirm(false);
+  };
+  const handleNext = () => {
+    closeModal();
+    submitForm();
   };
 
   const isLoad = () => {
@@ -134,8 +144,14 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
       setContent("주문 총액은 1만원 미만으로 제한하고 있습니다.");
       return openModal();
     }
+    // if (parseInt(orderPrice) <= 5000) {
+    //   setContent("최소주문금액 이상으로 주문해주세요");
+    //   return openModal();
+    // }
 
-    submitForm();
+    setUseConfirm(true);
+    setContent("주문을 하시겠습니까?");
+    return openModal();
   };
 
   const submitForm = () => {
@@ -154,14 +170,14 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
       })
       .then((response: any) => {
         console.log(response);
-        if (response?.data?.error?.name === "under_min_total_bid") {
-          setModalOpen(true);
-          setContent("최소주문금액 이상으로 주문해주세요");
-          return;
-        }
         if (response.status === 201) {
-          setModalOpen(true);
-          setContent("주문이 완료되었습니다.");
+          seTradeInfo(response.data);
+          toastInfo();
+          socketRef2.current.send("success_send_trade_order");
+          return;
+        } else {
+          setContent("다시 시도해주세요. (devTool network 확인할 것) ");
+          openModal();
           return;
         }
       })
@@ -169,6 +185,28 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
         console.log(error);
       });
   };
+
+  const bounce = cssTransition({
+    enter: "animate__animated animate__bounceIn",
+    exit: "animate__animated animate__bounceOut",
+  });
+
+  const toastInfo = () =>
+    toast("주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.", {
+      isLoading: true,
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      rtl: false,
+      pauseOnFocusLoss: true,
+      draggable: true,
+      pauseOnHover: true,
+      theme: "light",
+      // transition: Bounce,
+    });
+
+  const toastSuccess = () => toast.success("체결이 완료되었습니다.", {});
 
   return (
     <div className="ticker-wrapper">
@@ -277,8 +315,15 @@ const Ticker = ({ ticker }: TickerProps): JSX.Element => {
           </div>
         </div>
       </div>
+      <ToastContainer newestOnTop={false} transition={bounce} />
       {modalOpen && (
-        <ModalPopup closeModal={closeModal} title={title} content={content} />
+        <ModalPopup
+          confirm={useConfirm}
+          handleNext={handleNext}
+          closeModal={closeModal}
+          title={title}
+          content={content}
+        />
       )}
     </div>
   );

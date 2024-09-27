@@ -42,6 +42,7 @@ const socket = new WebSocketServer({
 const socket2 = new WebSocketServer({
   port: 4002,
 });
+
 // orderbook: 호가조회
 // ticker: 종목 정보
 socket.on("connection", (ws) => {
@@ -63,6 +64,10 @@ socket2.on("connection", (ws) => {
       ws.send(ticker);
     }
   }, 2000);
+
+  ws.on("message", async (data) => {
+    const teestst = data.toString("utf-8");
+  });
 });
 
 //////////////////////////////////////////////
