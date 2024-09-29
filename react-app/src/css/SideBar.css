@@ -1,8 +1,5 @@
-.side-bar,
-.side-bar * {
-  box-sizing: border-box;
-}
 .side-bar {
+  box-sizing: border-box;
   background: linear-gradient(
       180deg,
       rgba(36, 19, 85, 1) 0%,
@@ -17,7 +14,6 @@
   align-items: flex-start;
   justify-content: flex-start;
   width: 256px;
-  height: 920px;
   position: relative;
   overflow: hidden;
 }

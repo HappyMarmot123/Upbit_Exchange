@@ -145,8 +145,22 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
 
   return (
     <ContactContainer id={id}>
-      <Row justify="space-between" align="middle">
-        <Col lg={12} md={11} sm={24} xs={24}>
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{
+          padding: "2rem 1rem",
+          borderRadius: "10px",
+          background: "#fff",
+        }}
+      >
+        <Col
+          lg={12}
+          md={11}
+          sm={24}
+          xs={24}
+          style={{ display: "grid", justifyContent: "center" }}
+        >
           <Slide direction="left" triggerOnce>
             <Container>
               <h6 style={{ fontSize: "20px", marginTop: "0" }}>{t(title)}</h6>

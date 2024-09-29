@@ -192,3 +192,13 @@ em.logo {
   font-weight: 500;
   font-family: Roboto, "Noto Sans KR", "sans-serif", Arial, Helvetica;
 }
+
+.high-chart-wrapper {
+  padding: 1rem;
+  background: #ffff;
+  border-radius: 10px;
+}
+
+.swiper > .swiper-wrapper {
+  height: 80px;
+}

@@ -1,9 +1,15 @@
 .order-wrapper {
   width: 60%;
   position: relative;
+  display: flex;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  flex-direction: column;
 }
 .order-overflow-wrapper {
   height: 405px;
+  flex: 2 auto;
   overflow: hidden scroll;
 }
 .order-table {

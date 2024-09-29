@@ -50,6 +50,7 @@ const Header = () => {
                   <header className="mini-header api-link">
                     <a href="https://docs.upbit.com/reference/%EC%A0%84%EC%B2%B4-%EA%B3%84%EC%A2%8C-%EC%A1%B0%ED%9A%8C">
                       <img
+                        style={{ width: "80px" }}
                         alt="upbit_logo"
                         src="https://files.readme.io/40e45a0-small-upbit_color.png"
                       />

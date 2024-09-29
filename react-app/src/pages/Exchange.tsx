@@ -183,12 +183,14 @@ const Exchange = () => {
     <>
       <div className="exchange-wrapper">
         <div className="left-wrapper">
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-            ref={chartComponentRef}
-            constructorType={"stockChart"}
-          />
+          <div className="high-chart-wrapper">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options}
+              ref={chartComponentRef}
+              constructorType={"stockChart"}
+            />
+          </div>
           <div className="components-wrapper">
             {marketOrder && <OrderBook order={marketOrder} />}
             {marketTicker && (
