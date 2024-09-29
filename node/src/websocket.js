@@ -60,14 +60,13 @@ const privateWS = (obj) => {
 
     ws.on("open", () => {
       ws.send(
-        `[{"ticket":"${uuidv4()}"},{"type":"${obj.type}","codes":["${
-          obj.codes
-        }"],"isOnlyRealtime": true}]`
+        `[{"ticket":"${uuidv4()}"},{"type":"${
+          obj.type
+        }","isOnlyRealtime": true}]`
       );
     });
 
     ws.on("message", (msg) => {
-      console.log(msg);
       const dataString = msg.toString();
       resolve(dataString);
     });

@@ -25,6 +25,7 @@ const Exchange = () => {
   const [candleData, setCandleData] = useState([]);
   const [marketOrder, setMarketOrder] = useState(null);
   const [marketTicker, setMarketTicker] = useState(null);
+  const [orderStatus, setOrderStatus] = useState<string | null>(null);
 
   const socketRef = useRef<any>(null);
   const socketRef2 = useRef<any>(null);
@@ -47,15 +48,16 @@ const Exchange = () => {
       setMarketOrder(data);
     };
     socketRef2.current.onmessage = (event: { data: any }) => {
+      // if (typeof event.data === "string") {
       const data = JSON.parse(event.data);
       console.log(data);
       if (data.type === "ticker") {
         setMarketTicker(data);
       }
       if (data.type === "myOrder") {
-        console.log("myOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrder");
-        setMarketTicker(data);
+        setOrderStatus(data);
       }
+      // }
     };
 
     return () => {
@@ -190,7 +192,11 @@ const Exchange = () => {
           <div className="components-wrapper">
             {marketOrder && <OrderBook order={marketOrder} />}
             {marketTicker && (
-              <Ticker ticker={marketTicker} socketRef2={socketRef2} />
+              <Ticker
+                ticker={marketTicker}
+                socketRef2={socketRef2}
+                orderStatus={orderStatus}
+              />
             )}
           </div>
         </div>

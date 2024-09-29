@@ -60,16 +60,6 @@ socket.on("connection", (ws) => {
 socket2.on("connection", (ws) => {
   ws.interval = setInterval(async () => {
     if (ws.readyState === ws.OPEN && marketName) {
-      const myOrder = await privateWS({
-        type: "myOrder",
-        codes: "KRW-DOGE",
-      });
-      console.log(myOrder);
-      ws.send(myOrder);
-    }
-  }, 2000);
-  ws.interval = setInterval(async () => {
-    if (ws.readyState === ws.OPEN && marketName) {
       const ticker = await publicWS({
         type: "ticker",
         codes: marketName,
@@ -79,9 +69,18 @@ socket2.on("connection", (ws) => {
   }, 2000);
 
   ws.on("message", async (data) => {
-    const teestst = data.toString("utf-8");
-
-    if (teestst === "283462378y48uwguio") {
+    const msg = data.toString("utf-8");
+    console.log(msg);
+    // TODO: 매수시도, 취소, 체결 시에만 알림
+    if (
+      ws.readyState === ws.OPEN &&
+      marketName &&
+      msg === "success_send_trade_order"
+    ) {
+      const myOrder = await privateWS({
+        type: "myOrder",
+      });
+      ws.send(myOrder);
     }
   });
 });

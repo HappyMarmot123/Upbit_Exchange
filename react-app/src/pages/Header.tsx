@@ -7,7 +7,7 @@ const Header = () => {
       <div className="css-rnhepa">
         <HoverCard.Root>
           <HoverCard.Trigger asChild>
-            <div style={{ height: "100%" }}>
+            <div className="upbit_logo_box">
               <img
                 alt="upbit_logo"
                 src="https://cdn.upbit.com/upbit-web/images/upbit_logo_w.a7d73a6.svg"
@@ -44,6 +44,14 @@ const Header = () => {
                       <img
                         alt="upbit_logo"
                         src="https://cdn.upbit.com/upbit-web/images/upbit_logo_w.a7d73a6.svg"
+                      />
+                    </a>
+                  </header>
+                  <header className="mini-header api-link">
+                    <a href="https://docs.upbit.com/reference/%EC%A0%84%EC%B2%B4-%EA%B3%84%EC%A2%8C-%EC%A1%B0%ED%9A%8C">
+                      <img
+                        alt="upbit_logo"
+                        src="https://files.readme.io/40e45a0-small-upbit_color.png"
                       />
                     </a>
                   </header>

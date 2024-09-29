@@ -18,9 +18,14 @@ interface TickerProps {
     trade_price: number; //현재가
   };
   socketRef2: any;
+  orderStatus: any;
 }
 
-const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
+const Ticker = ({
+  ticker,
+  socketRef2,
+  orderStatus,
+}: TickerProps): JSX.Element => {
   const context = useContext(ContextModule);
 
   if (!context) {
@@ -40,7 +45,7 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
   const [purchase, setPurchase] = useState("0");
   const [orderQuantity, setOrderQuantity] = useState("0");
   const [orderPrice, setOrderPrice] = useState("0");
-  const [tradeInfo, seTradeInfo] = useState({});
+  const [tradeInfo, seTradeInfo] = useState<any>({});
 
   useEffect(() => {
     const chase = parseInt(removeComma(purchase));
@@ -128,7 +133,7 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
   };
 
   const handleValidate = async () => {
-    return socketRef2.current.send("283462378y48uwguio");
+    const removedCommaPrice = parseInt(removeComma(orderPrice));
     if (parseInt(purchase) <= 0 || purchase === "") {
       setContent("매수가격을 입력해주세요.");
       return openModal();
@@ -137,18 +142,18 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
       setContent("주문수량을 입력해주세요.");
       return openModal();
     }
-    if (parseInt(orderPrice) <= 0 || orderPrice === "") {
+    if (removedCommaPrice <= 0 || orderPrice === "") {
       setContent("주문총액을 입력해주세요.");
       return openModal();
     }
-    if (parseInt(orderPrice) >= 10000) {
+    if (removedCommaPrice >= 10000) {
       setContent("주문 총액은 1만원 미만으로 제한하고 있습니다.");
       return openModal();
     }
-    // if (parseInt(orderPrice) <= 5000) {
-    //   setContent("최소주문금액 이상으로 주문해주세요");
-    //   return openModal();
-    // }
+    if (removedCommaPrice <= 5000) {
+      setContent("최소주문금액 이상으로 주문해주세요");
+      return openModal();
+    }
 
     setUseConfirm(true);
     setContent("주문을 하시겠습니까?");
@@ -160,8 +165,16 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
     formData.append("market", ticker.code);
     formData.append("side", "bid");
     formData.append("volume", orderQuantity);
-    formData.append("price", orderPrice);
+    formData.append("price", removeComma(purchase));
     formData.append("ord_type", "limit");
+
+    // const formData = {
+    //   market: ticker.code,
+    //   side: "bid",
+    //   volume: orderQuantity,
+    //   price: removeComma(orderPrice),
+    //   ord_type: "price",
+    // };
 
     axios
       .post("/v1/orders", formData, {
@@ -171,9 +184,8 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
       })
       .then((response: any) => {
         console.log(response);
-        if (response.status === 201) {
+        if (response.status === 200) {
           seTradeInfo(response.data);
-          toastInfo();
           socketRef2.current.send("success_send_trade_order");
           return;
         } else {
@@ -193,21 +205,52 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
   });
 
   const toastInfo = () =>
-    toast("주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.", {
-      isLoading: true,
-      position: "top-center",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      rtl: false,
-      pauseOnFocusLoss: true,
-      draggable: true,
-      pauseOnHover: true,
-      theme: "light",
-      // transition: Bounce,
-    });
+    toast(
+      "주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.",
+      {
+        position: "top-center",
+        isLoading: true,
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      }
+      // toast("주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.", {
+      //   isLoading: true,
+      //   position: "top-center",
+      //   autoClose: false,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   theme: "light",
+      //   draggable: true,
+      //   containerId: ""
+      //   // pauseOnHover: true,
+      //   // transition: Bounce,
+      // }
+    );
 
   const toastSuccess = () => toast.success("체결이 완료되었습니다.", {});
+
+  useEffect(() => {
+    console.log(orderStatus);
+    seTradeInfo(orderStatus);
+  }, [orderStatus]);
+
+  useEffect(() => {
+    if (tradeInfo?.state === "wait") {
+      toastInfo();
+    }
+    if (tradeInfo?.state === "cancel") {
+      toast.dismiss();
+    }
+    if (tradeInfo?.state === "done") {
+      toastSuccess();
+    }
+  }, [tradeInfo]);
 
   return (
     <div className="ticker-wrapper">
