@@ -128,6 +128,7 @@ const Ticker = ({ ticker, socketRef2 }: TickerProps): JSX.Element => {
   };
 
   const handleValidate = async () => {
+    return socketRef2.current.send("283462378y48uwguio");
     if (parseInt(purchase) <= 0 || purchase === "") {
       setContent("매수가격을 입력해주세요.");
       return openModal();

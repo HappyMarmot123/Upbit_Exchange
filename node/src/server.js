@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 const upbit = require("./upbit");
-const websocket = require("./websocket");
+const { publicWS, privateWS } = require("./websocket");
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -48,7 +48,7 @@ const socket2 = new WebSocketServer({
 socket.on("connection", (ws) => {
   ws.interval = setInterval(async () => {
     if (ws.readyState === ws.OPEN && marketName) {
-      const orderbook = await websocket({
+      const orderbook = await publicWS({
         type: "orderbook",
         codes: marketName,
       });
@@ -60,13 +60,29 @@ socket.on("connection", (ws) => {
 socket2.on("connection", (ws) => {
   ws.interval = setInterval(async () => {
     if (ws.readyState === ws.OPEN && marketName) {
-      const ticker = await websocket({ type: "ticker", codes: marketName });
+      const myOrder = await privateWS({
+        type: "myOrder",
+        codes: "KRW-DOGE",
+      });
+      console.log(myOrder);
+      ws.send(myOrder);
+    }
+  }, 2000);
+  ws.interval = setInterval(async () => {
+    if (ws.readyState === ws.OPEN && marketName) {
+      const ticker = await publicWS({
+        type: "ticker",
+        codes: marketName,
+      });
       ws.send(ticker);
     }
   }, 2000);
 
   ws.on("message", async (data) => {
     const teestst = data.toString("utf-8");
+
+    if (teestst === "283462378y48uwguio") {
+    }
   });
 });
 

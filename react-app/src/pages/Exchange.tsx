@@ -48,7 +48,14 @@ const Exchange = () => {
     };
     socketRef2.current.onmessage = (event: { data: any }) => {
       const data = JSON.parse(event.data);
-      setMarketTicker(data);
+      console.log(data);
+      if (data.type === "ticker") {
+        setMarketTicker(data);
+      }
+      if (data.type === "myOrder") {
+        console.log("myOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrdermyOrder");
+        setMarketTicker(data);
+      }
     };
 
     return () => {
