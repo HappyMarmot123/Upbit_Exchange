@@ -7,6 +7,8 @@ import ModalPopup from "../Modal/ModalPopup";
 import axios from "axios";
 import { Bounce, ToastContainer, toast, cssTransition } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Refresh from "../../images/icon_refresh.svg";
+import { addAutoComma, removeComma } from "../../common/Util";
 
 interface TickerProps {
   ticker: {
@@ -64,6 +66,26 @@ const Ticker = ({
     }
   }, [orderPrice]);
 
+  useEffect(() => {
+    console.log(orderStatus);
+    seTradeInfo(orderStatus);
+  }, [orderStatus]);
+
+  useEffect(() => {
+    if (tradeInfo?.state === "wait") {
+      toastInfo();
+    }
+    if (tradeInfo?.state === "cancel") {
+      toast.dismiss();
+      toastError();
+    }
+    if (tradeInfo?.state === "done") {
+      console.log(tradeInfo);
+      toast.dismiss();
+      toastSuccess();
+    }
+  }, [tradeInfo]);
+
   const openModal = () => {
     setModalOpen(true);
   };
@@ -111,19 +133,6 @@ const Ticker = ({
   const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderPrice(addAutoComma(e.target.value));
     setOrderQuantity("0");
-  };
-
-  const addAutoComma = (value: string) => {
-    var removeChar = value.replace(/[^0-9\.]/g, "");
-    var removeDot = removeChar.replace(/\./g, ""); // This is to remove "DOT"
-    var formatedNumber = removeDot.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return formatedNumber;
-  };
-
-  const removeComma = (value: string) => {
-    var removeChar = value.replace(/[^0-9\.]/g, "");
-    var removeDot = removeChar.replace(/\./g, "");
-    return removeDot;
   };
 
   const handleFieldValue = () => {
@@ -205,52 +214,31 @@ const Ticker = ({
   });
 
   const toastInfo = () =>
-    toast(
-      "주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.",
-      {
-        position: "top-center",
-        isLoading: true,
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      }
-      // toast("주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.", {
-      //   isLoading: true,
-      //   position: "top-center",
-      //   autoClose: false,
-      //   hideProgressBar: true,
-      //   closeOnClick: true,
-      //   theme: "light",
-      //   draggable: true,
-      //   containerId: ""
-      //   // pauseOnHover: true,
-      //   // transition: Bounce,
-      // }
-    );
-
-  const toastSuccess = () => toast.success("체결이 완료되었습니다.", {});
-
-  useEffect(() => {
-    console.log(orderStatus);
-    seTradeInfo(orderStatus);
-  }, [orderStatus]);
-
-  useEffect(() => {
-    if (tradeInfo?.state === "wait") {
-      toastInfo();
-    }
-    if (tradeInfo?.state === "cancel") {
-      toast.dismiss();
-    }
-    if (tradeInfo?.state === "done") {
-      toastSuccess();
-    }
-  }, [tradeInfo]);
+    toast("주문이 완료되었습니다. 체결이 완료되는 대로 알려드려요.", {
+      position: "top-center",
+      isLoading: true,
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+      transition: Bounce,
+    });
+  const toastSuccess = () =>
+    toast.success("체결이 완료되었습니다.", {
+      position: "top-center",
+      draggable: true,
+      progress: undefined,
+      transition: Bounce,
+    });
+  const toastError = () =>
+    toast.error("주문을 취소하였습니다.", {
+      position: "top-center",
+      draggable: true,
+      progress: undefined,
+      transition: Bounce,
+    });
 
   return (
     <div className="ticker-wrapper">

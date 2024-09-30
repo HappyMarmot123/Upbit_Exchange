@@ -72,7 +72,9 @@ const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
         </Slide>
       </MiddleBlockSection>
       <Swiper
+        className="middle-block-swiper"
         direction="vertical"
+        height={80}
         spaceBetween={30}
         slidesPerView={1}
         centeredSlides={true}
@@ -80,8 +82,6 @@ const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        height={80}
-        className="mySwiper"
         modules={[
           Autoplay,
           // , Pagination, Navigation

@@ -1,4 +1,11 @@
-import { RefObject, useContext, useEffect, useRef, useState } from "react";
+import {
+  RefObject,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { SideBar } from "../components/marketSearch/SideBar";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -137,47 +144,44 @@ const Exchange = () => {
   ////////////////////////////////////////////////////
   ////////////////////////////////////////////////////
 
-  const test = () => {
-    if (isConnected) {
-      socketRef.current.send("hi");
-    }
-  };
-
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
-  const options: Highcharts.Options = {
-    chart: {
-      style: {
-        height: 450,
-      },
-    },
-    title: {
-      text: contextValue?.selectedMarketName,
-    },
-    rangeSelector: {
-      selected: 1,
-    },
-    navigator: {
-      series: {
-        color: "#000000",
-      },
-    },
-    series: [
-      {
-        type: "candlestick",
-        color: "#FF7F7F",
-        upColor: "#90EE90",
-        data: candleData,
-        lastPrice: {
-          enabled: true,
-          label: {
-            enabled: true,
-            backgroundColor: "#FF7F7F",
-          },
+  const options: Highcharts.Options = useMemo(
+    () => ({
+      chart: {
+        style: {
+          height: 450,
         },
       },
-    ],
-  };
+      title: {
+        text: contextValue?.selectedMarketName,
+      },
+      rangeSelector: {
+        selected: 1,
+      },
+      navigator: {
+        series: {
+          color: "#000000",
+        },
+      },
+      series: [
+        {
+          type: "candlestick",
+          color: "#FF7F7F",
+          upColor: "#90EE90",
+          data: candleData,
+          lastPrice: {
+            enabled: true,
+            label: {
+              enabled: true,
+              backgroundColor: "#FF7F7F",
+            },
+          },
+        },
+      ],
+    }),
+    [contextValue, candleData]
+  );
 
   return (
     <>
@@ -204,7 +208,7 @@ const Exchange = () => {
         </div>
         <SideBar marketData={marketData} />
       </div>
-      <div id="scroll-footer" onClick={test} />
+      <div id="scroll-footer" />
     </>
   );
 };

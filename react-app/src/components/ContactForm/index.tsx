@@ -148,85 +148,63 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
       <Row
         justify="space-between"
         align="middle"
-        style={{
-          padding: "2rem 1rem",
-          borderRadius: "10px",
-          background: "#fff",
-        }}
+        className="contact-row-wrapper"
       >
-        <Col
-          lg={12}
-          md={11}
-          sm={24}
-          xs={24}
-          style={{ display: "grid", justifyContent: "center" }}
-        >
-          <Slide direction="left" triggerOnce>
-            <Container>
-              <h6 style={{ fontSize: "20px", marginTop: "0" }}>{t(title)}</h6>
-              <TextWrapper>
-                <Content>{t(content)}</Content>
-              </TextWrapper>
-            </Container>
-            <ButtonWrapper>
-              <Button onClick={openModal}>
-                {isCountdown ? countdown : "입금하기"}
-              </Button>
-              <Button color="white" onClick={handleRefresh}>
-                새로고침
-              </Button>
-            </ButtonWrapper>
-            {history && (
-              <>
-                <p
-                  className="css-1kn6t8k"
-                  style={{ width: "400px", borderBottom: "1px solid #d6d8db" }}
-                >
-                  {history?.created_at}
-                </p>
-                <div style={{ width: "400px" }}>
-                  <div
-                    className="css-1nmeflg"
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <div className="css-139b19o">
-                      <span
-                        className="css-ibgu1b"
-                        style={{
-                          lineHeight: "21px",
-                          fontWeight: "inherit",
-                          fontSize: "14px",
-                          color: "rgb(200, 74, 49)",
-                        }}
-                      >
-                        {status && status}
-                      </span>
-                      <div className="css-0">
-                        <span
-                          className="css-be1fqg"
-                          style={{
-                            lineHeight: "19px",
-                            fontWeight: "inherit",
-                            fontSize: "13px",
-                            color: "rgb(142, 146, 155)",
-                          }}
-                        >
-                          txid: {history.txid}
+        <div className="left-box">
+          <div className="upper-layer">
+            <Slide direction="left" triggerOnce>
+              <Container>
+                <h6 style={{ fontSize: "20px", marginTop: "0" }}>{t(title)}</h6>
+                <TextWrapper>
+                  <Content>{t(content)}</Content>
+                </TextWrapper>
+              </Container>
+              <ButtonWrapper>
+                <Button onClick={openModal}>
+                  {isCountdown ? countdown : "입금하기"}
+                </Button>
+                <Button color="white" onClick={handleRefresh}>
+                  새로고침
+                </Button>
+              </ButtonWrapper>
+            </Slide>
+          </div>
+          <div className="lower-layer">
+            <Slide direction="left" triggerOnce>
+              {history && (
+                <>
+                  <p className="css-1kn6t8k p-title">{history?.created_at}</p>
+                  <div style={{ width: "400px" }}>
+                    <div
+                      className="css-1nmeflg"
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div className="css-139b19o">
+                        <span className="css-ibgu1b span-one">
+                          {status && status}
                         </span>
+                        <div className="css-0">
+                          <span className="css-be1fqg span-two">
+                            txid: {history.txid}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="css-1fuc94h">
+                        <p className="css-c48ud8">
+                          <b>{history.amount}</b> <i>{history.currency}</i>
+                        </p>
                       </div>
                     </div>
-                    <div className="css-1fuc94h">
-                      <p className="css-c48ud8">
-                        <b>{history.amount}</b> <i>{history.currency}</i>
-                      </p>
-                    </div>
                   </div>
-                </div>
-              </>
-            )}
-          </Slide>
-        </Col>
-        <Col lg={12} md={12} sm={24} xs={24}>
+                </>
+              )}
+            </Slide>
+          </div>
+        </div>
+        <div className="right-box">
           <Slide direction="right" triggerOnce>
             <div className="css-1s4fxp9">
               <table className="css-8atqhb">
@@ -239,52 +217,33 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
                   <tr className="css-1ssbn0c">
                     <th className="css-1njmbmf">코인명</th>
                     <th className="css-14t5sgh">
-                      <a href="" className="css-1efmu1c">
-                        보유수량
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="12"
-                          height="12"
-                          className="css-1hgro7d"
-                        >
-                          <use href="#N_sort_12"></use>
-                        </svg>
-                      </a>
+                      보유수량
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        className="css-1hgro7d"
+                      >
+                        <use href="#N_sort_12"></use>
+                      </svg>
                     </th>
                     <th className="css-dbissl">
-                      <a href="" className="css-124urwl">
-                        평가금액
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          className="css-11avl2t"
-                        >
-                          <use href="#N_switch_16"></use>
-                        </svg>
-                      </a>
+                      평가금액
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        className="css-11avl2t"
+                      >
+                        <use href="#N_switch_16"></use>
+                      </svg>
                     </th>
                   </tr>
                 </thead>
               </table>
             </div>
-            <div
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                width: "100%",
-                height: "400px",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "0px",
-                  overflowY: "scroll",
-                  marginRight: "-17px",
-                  marginBottom: "-17px",
-                }}
-              >
+            <div className="coin-list-wrapper">
+              <div className="coin-list">
                 <div className="css-tev1mt">
                   <table className="css-8atqhb" style={{ width: "100%" }}>
                     <colgroup>
@@ -298,7 +257,7 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
                           <tr
                             className="css-1gouakb"
                             style={{
-                              borderTop: "1px solid var(--theme-colors-line_1)",
+                              borderTop: "1px solid #edeef1",
                             }}
                           >
                             <td className="css-kub49d">
@@ -331,7 +290,7 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
               </div>
             </div>
           </Slide>
-        </Col>
+        </div>
       </Row>
       {depositModalOpen && (
         <DepositModalOpen

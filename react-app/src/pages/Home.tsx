@@ -2,6 +2,7 @@ import { lazy, useContext, useEffect, useState } from "react";
 import MiddleBlockContent from "../content/MiddleBlockContent.json";
 import ContactContent from "../content/ContactContent.json";
 import { ContextModule } from "../context/ContextProvider";
+import React from "react";
 
 const Contact = lazy(() => import("../components/ContactForm"));
 const MiddleBlock = lazy(() => import("../components/MiddleBlock"));
@@ -56,4 +57,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);
