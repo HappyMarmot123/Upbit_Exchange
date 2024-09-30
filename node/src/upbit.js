@@ -115,6 +115,42 @@ const depositsList = (txid, callback) => {
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
+const order = (uuid, callback) => {
+  const body = {
+    uuid: uuid,
+    // uuid: '94332e99-3a87-4a35-ad98-28b0c969f830'
+  };
+
+  const query = queryEncode(body);
+
+  const hash = crypto.createHash("sha512");
+  const queryHash = hash.update(query, "utf-8").digest("hex");
+
+  const payload = {
+    access_key: access_key,
+    nonce: uuidv4(),
+    query_hash: queryHash,
+    query_hash_alg: "SHA512",
+  };
+
+  const token = sign(payload, secret_key);
+
+  const options = {
+    method: "GET",
+    url: server_url + "/v1/order?" + query,
+    headers: { Authorization: `Bearer ${token}` },
+    json: body,
+  };
+
+  request(options, (error, response, body) => {
+    if (callback) {
+      callback(error, body);
+    }
+  });
+};
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
 const marketList = (callback) => {
   const options = {
     uri: "https://api.upbit.com/v1/market/all?isDetails=false",
@@ -188,6 +224,7 @@ module.exports = {
   accounts,
   deposit,
   depositsList,
+  order,
   marketList,
   candle,
   orders,

@@ -56,14 +56,14 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
   };
 
   const handleRefresh = () => {
-    if (history) {
-      try {
-        userAccounts();
+    try {
+      userAccounts();
+      if (history) {
         depositHistory();
-      } catch (e) {
-        alert("refresh fetch error");
-        alert(e);
       }
+    } catch (e) {
+      alert("refresh fetch error");
+      alert(e);
     }
   };
 

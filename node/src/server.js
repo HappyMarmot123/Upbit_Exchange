@@ -110,8 +110,8 @@ app.get("/local/websocket/api", (req, res) => {
 //////////////////////////////////////////////
 
 const consoleLog = (label, data) => {
-  // console.log(label);
-  // console.log(data);
+  console.log(label);
+  console.log(data);
 };
 
 // 계좌조회
@@ -174,6 +174,28 @@ app.get("/v1/deposit/history", async (req, res) => {
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
+// 개별 주문 조회
+app.post("/v1/order", async (req, res) => {
+  const uuid = req.body.uuid;
+
+  if (!uuid) {
+    return res.status(400).send("uuid is required");
+  }
+
+  const order = await new Promise((resolve, reject) => {
+    upbit.order(uuid, (error, data) => {
+      if (error) return reject(error);
+      resolve(data);
+    });
+  });
+
+  consoleLog("개별주문조회:", order);
+  res.send(order);
+});
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
 // 마켓 조회
 app.get("/v1/market", async (req, res) => {
   const market = await new Promise((resolve, reject) => {
@@ -183,7 +205,7 @@ app.get("/v1/market", async (req, res) => {
     });
   });
 
-  consoleLog("마켓조회:", market);
+  // consoleLog("마켓조회:", market);
   res.send(market);
 });
 
@@ -205,7 +227,7 @@ app.get("/v1/candle", async (req, res) => {
     });
   });
 
-  consoleLog("캔들 (일 단위):", candle);
+  // consoleLog("캔들 (일 단위):", candle);
   res.send(candle);
 });
 

@@ -47,7 +47,7 @@ const Ticker = ({
   const [purchase, setPurchase] = useState("0");
   const [orderQuantity, setOrderQuantity] = useState("0");
   const [orderPrice, setOrderPrice] = useState("0");
-  const [tradeInfo, seTradeInfo] = useState<any>({});
+  const [tradeInfo, setTradeInfo] = useState<any>({});
 
   useEffect(() => {
     const chase = parseInt(removeComma(purchase));
@@ -68,7 +68,7 @@ const Ticker = ({
 
   useEffect(() => {
     console.log(orderStatus);
-    seTradeInfo(orderStatus);
+    setTradeInfo(orderStatus);
   }, [orderStatus]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const Ticker = ({
       toast.dismiss();
       toastError();
     }
-    if (tradeInfo?.state === "done") {
+    if (tradeInfo?.state === "trade" || tradeInfo?.state === "done") {
       console.log(tradeInfo);
       toast.dismiss();
       toastSuccess();
@@ -176,7 +176,6 @@ const Ticker = ({
     formData.append("volume", orderQuantity);
     formData.append("price", removeComma(purchase));
     formData.append("ord_type", "limit");
-
     // const formData = {
     //   market: ticker.code,
     //   side: "bid",
@@ -194,8 +193,12 @@ const Ticker = ({
       .then((response: any) => {
         console.log(response);
         if (response.status === 200) {
-          seTradeInfo(response.data);
           socketRef2.current.send("success_send_trade_order");
+          setTradeInfo(response.data);
+
+          setTimeout(() => {
+            myOrder(response);
+          }, 2000);
           return;
         } else {
           setContent("다시 시도해주세요. (devTool network 확인할 것) ");
@@ -205,6 +208,18 @@ const Ticker = ({
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const myOrder = (param: any) => {
+    axios
+      .post("/v1/order", { uuid: param.data.uuid })
+      .then((r: any) => {
+        const response = r?.data;
+        setTradeInfo(response);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
