@@ -40,13 +40,12 @@ const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
   const { contextValue, setContextValue } = context;
 
   const openExchange = () => {
-    if (
-      contextValue.depositStatus === "PROCESSING" ||
-      contextValue.depositStatus === "ACCEPTED" ||
-      contextValue.depositStatus === "REJECTED"
-    ) {
-      setContextValue("openExchange", "true");
-    }
+    // if (
+    //   contextValue.depositStatus === "PROCESSING" ||
+    //   contextValue.depositStatus === "ACCEPTED" ||
+    //   contextValue.depositStatus === "REJECTED"
+    // ) {    }
+    setContextValue("openExchange", "true");
   };
 
   return (

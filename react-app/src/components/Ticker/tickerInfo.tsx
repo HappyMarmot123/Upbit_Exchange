@@ -25,12 +25,12 @@ const TickerInfo = (ticker: any) => {
         <dt>당일고가</dt>
         <dd className="up">
           {ticker?.ticker?.high_price}
-          <em className="up">+0%</em>
+          <em className="up">+</em>
         </dd>
         <dt>당일저가</dt>
         <dd className="down">
           {ticker?.ticker?.low_price}
-          <em className="down">-0%</em>
+          <em className="down">-</em>
         </dd>
       </dl>
     </>

@@ -223,7 +223,7 @@ em.logo {
 .contact-row-wrapper > .left-box .upper-layer {
   display: grid;
   height: 16rem;
-  padding: 2rem 1rem;
+  padding: 2rem;
   border-radius: 10px;
   background: #fff;
   justify-content: space-around;

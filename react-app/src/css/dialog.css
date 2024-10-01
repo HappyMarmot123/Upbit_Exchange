@@ -49,6 +49,11 @@
   color: white;
   font-size: 1rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s linear;
+}
+.dialog_wrap .btn:hover {
+  background: #6750a5;
 }
 .dialog_wrap .box_btn {
   margin: 40px 0 0;

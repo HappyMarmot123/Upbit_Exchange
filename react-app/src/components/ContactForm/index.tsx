@@ -252,7 +252,7 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
                       <col style={{ width: "40%" }} />
                     </colgroup>
                     <tbody className="css-1k04qh9" style={{ width: "520px" }}>
-                      {accounts.length > 0 &&
+                      {accounts.length > 0 ? (
                         accounts.map((item: any) => (
                           <tr
                             className="css-1gouakb"
@@ -283,7 +283,25 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
                               </p>
                             </td>
                           </tr>
-                        ))}
+                        ))
+                      ) : (
+                        <tr
+                          className="css-1gouakb"
+                          style={{
+                            borderTop: "1px solid #edeef1",
+                          }}
+                        >
+                          <td className="css-kub49d">
+                            <div className="css-makz8n">
+                              <div className="css-0">
+                                <p className="css-1v9p6ny">
+                                  자산이 존재하지 않습니다.
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

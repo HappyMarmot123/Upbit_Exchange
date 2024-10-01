@@ -19,22 +19,19 @@ const Home = () => {
   }
 
   const { contextValue, setContextValue } = context;
-  const [showup, setShowup] = useState(false);
 
   useEffect(() => {
     if (contextValue.openExchange === "true") {
-      setShowup(true);
+      const element = document.getElementById(
+        "scroll-footer"
+      ) as HTMLDivElement;
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
     }
   }, [contextValue]);
-
-  useEffect(() => {
-    const element = document.getElementById("scroll-footer") as HTMLDivElement;
-    if (showup && element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  }, [showup]);
 
   return (
     <>
@@ -51,7 +48,7 @@ const Home = () => {
           content={ContactContent.text}
           id="contact"
         />
-        {true && <Exchange />}
+        <Exchange />
       </Container>
     </>
   );

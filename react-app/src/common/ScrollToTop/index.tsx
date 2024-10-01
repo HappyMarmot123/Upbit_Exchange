@@ -33,28 +33,8 @@ const ScrollToTop = () => {
     });
   };
 
-  const [theme, setTheme] = useState("light");
-
-  const themeChange = () => {
-    if (theme === "light") {
-      const html = document.querySelector("html") as HTMLHtmlElement;
-      html.className = "dark";
-      html.style.colorScheme = "dark";
-      setTheme("dark");
-    }
-    if (theme === "dark") {
-      const html = document.querySelector("html") as HTMLHtmlElement;
-      html.className = "light";
-      html.style.colorScheme = "light";
-      setTheme("light");
-    }
-  };
-
   return (
     <ScrollWrapper id="sticky-remote-controller">
-      <ScrollUpContainer onClick={themeChange} show={showScroll}>
-        <Div>테마</Div>
-      </ScrollUpContainer>
       <ScrollUpContainer onClick={scrollUp} show={showScroll}>
         <Div>위로</Div>
       </ScrollUpContainer>

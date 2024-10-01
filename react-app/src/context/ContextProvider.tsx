@@ -1,5 +1,13 @@
 import React, { createContext, useState, ReactNode } from "react";
 
+// **********************************************************************
+// *** 사용하는 아이디 리스트 ***
+// depositStatus - 입금 상태
+// selectedMarket - 선택한 상품
+// selectedMarketName - 선택한 상품 이름
+// userKRW - 원화 소유금액
+// **********************************************************************
+
 interface DepositContextProps {
   contextValue: { [key: string]: string };
   setContextValue: (id: string, value: string) => void;
@@ -26,11 +34,3 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
     </ContextModule.Provider>
   );
 };
-
-// **********************************************************************
-// *** 사용하는 아이디 리스트 ***
-// depositStatus - 입금 상태
-// selectedMarket - 선택한 상품
-// selectedMarketName - 선택한 상품 이름
-// userKRW - 원화 소유금액
-// **********************************************************************
