@@ -1,8 +1,8 @@
 # 업비트 API
 
-![업빗1](https://github.com/user-attachments/assets/0dbc06bf-d9ba-4f64-9ad7-8d6407c62107)
+![업빗1](https://github.com/user-attachments/assets/6aac6960-b6f1-4d07-9c37-ebc36e3d5abd)
 
-![체결완료](https://github.com/user-attachments/assets/91140dff-19e3-4404-b47a-5f1327fc17d0)
+![체결완료](https://github.com/user-attachments/assets/432186c8-9966-42a0-90a3-76cc6fd8e009)
 
 ## 🚀 프로젝트 특징
 
