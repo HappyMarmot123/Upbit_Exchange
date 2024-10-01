@@ -27,6 +27,7 @@
 .ticker-wrapper dl dd {
   float: left;
   margin-top: 6px;
+  margin-right: 20px;
   line-height: 16px;
   color: #333;
   font-size: 11px;

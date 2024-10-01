@@ -36,9 +36,7 @@ const Ticker = ({
 
   const { contextValue, setContextValue } = context;
 
-  const [ableAmount, setAbleAmount] = useState(
-    parseInt(contextValue?.userKRW) || 0
-  );
+  const [ableAmount, setAbleAmount] = useState(0);
   const [title, setTitle] = useState("매수 안내");
   const [content, setContent] = useState("");
   const [useConfirm, setUseConfirm] = useState(false);
@@ -48,6 +46,12 @@ const Ticker = ({
   const [orderQuantity, setOrderQuantity] = useState("0");
   const [orderPrice, setOrderPrice] = useState("0");
   const [tradeInfo, setTradeInfo] = useState<any>({});
+
+  useEffect(() => {
+    if (contextValue?.userKRW) {
+      setAbleAmount(parseInt(contextValue?.userKRW) || 0);
+    }
+  }, [contextValue]);
 
   useEffect(() => {
     const chase = parseInt(removeComma(purchase));
