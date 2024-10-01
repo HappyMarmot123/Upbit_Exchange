@@ -25,11 +25,14 @@ const Home = () => {
       const element = document.getElementById(
         "scroll-footer"
       ) as HTMLDivElement;
+
       if (element) {
         element.scrollIntoView({
           behavior: "smooth",
         });
       }
+
+      setContextValue("openExchange", "false");
     }
   }, [contextValue]);
 

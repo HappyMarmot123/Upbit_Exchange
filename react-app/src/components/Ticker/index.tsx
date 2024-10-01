@@ -216,7 +216,9 @@ const Ticker = ({
       .post("/v1/order", { uuid: param.data.uuid })
       .then((r: any) => {
         const response = r?.data;
-        setTradeInfo(response);
+        if (response?.state === "trade" || response?.state === "done") {
+          setTradeInfo(response);
+        }
       })
       .catch((e) => {
         console.log(e);
