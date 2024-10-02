@@ -196,8 +196,16 @@ const Ticker = ({
       })
       .then((response: any) => {
         console.log(response);
+        const err = response?.data?.error || undefined;
+
+        if (err?.name === "insufficient_funds_bid") {
+          setContent(err.message);
+          openModal();
+          return;
+        }
         if (response.status === 200) {
           socketRef2.current.send("success_send_trade_order");
+          userAccounts();
           setTradeInfo(response.data);
 
           setTimeout(() => {
@@ -213,6 +221,17 @@ const Ticker = ({
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const userAccounts = async () => {
+    const response = await fetch("/v1/accounts");
+    const data = await response.json();
+
+    if (data.length > 0) {
+      setAbleAmount(parseInt(data[0].balance) || 0);
+    } else {
+      console.error("accounts failed:");
+    }
   };
 
   const myOrder = (param: any) => {
