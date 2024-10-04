@@ -134,6 +134,16 @@ const Ticker = ({
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderQuantity(addAutoComma(e.target.value));
   };
+  const handleQuantityBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value === "") {
+      setOrderQuantity("0");
+    }
+  };
+  const handleQuantityFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value === "0") {
+      setOrderQuantity("");
+    }
+  };
   const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderPrice(addAutoComma(e.target.value));
     setOrderQuantity("0");
@@ -337,6 +347,8 @@ const Ticker = ({
                   className="css-sw8u0u"
                   value={orderQuantity}
                   onChange={handleQuantity}
+                  onBlur={handleQuantityBlur}
+                  onFocus={handleQuantityFocus}
                   placeholder="0"
                 />
               </div>
@@ -347,8 +359,9 @@ const Ticker = ({
           <div className="css-0">주문총액</div>
           <div className="css-0">
             <div className="css-ihz6y5">
-              <div className="css-xx6yfy">
+              <div className="css-xx6yfy input-readonly">
                 <input
+                  readOnly
                   type="text"
                   className="css-sw8u0u"
                   value={orderPrice}

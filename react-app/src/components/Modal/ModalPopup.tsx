@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Button from "./button";
 import ModalWrapper from "./ModalWrapper";
 
@@ -17,11 +17,7 @@ const ModalPopup = ({
   handleNext,
   closeModal,
 }: PropType) => {
-  const close = useCallback(() => {
-    if (closeModal) {
-      closeModal();
-    }
-  }, []);
+  const modalStyle = {};
 
   const agree = useCallback(() => {
     if (handleNext) {
@@ -29,7 +25,34 @@ const ModalPopup = ({
     }
   }, []);
 
-  const modalStyle = {};
+  const close = useCallback(() => {
+    if (closeModal) {
+      closeModal();
+    }
+  }, []);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (!confirm && (e.key === "Enter" || e.key === "Escape")) {
+      agree();
+    }
+
+    if (confirm) {
+      if (e.key === "Enter") {
+        return agree();
+      }
+      if (e.key === "Escape") {
+        return close();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <ModalWrapper modalStyle={modalStyle}>

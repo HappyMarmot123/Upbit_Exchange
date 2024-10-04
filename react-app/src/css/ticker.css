@@ -267,3 +267,6 @@ span.first em {
 .cancel-order {
   display: none;
 }
+.input-readonly {
+  background: #f4f5f7;
+}
