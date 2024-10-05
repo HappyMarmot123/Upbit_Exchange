@@ -57,7 +57,6 @@ const Exchange = () => {
     socketRef2.current.onmessage = (event: { data: any }) => {
       // if (typeof event.data === "string") {
       const data = JSON.parse(event.data);
-      console.log(data);
       if (data.type === "ticker") {
         setMarketTicker(data);
       }

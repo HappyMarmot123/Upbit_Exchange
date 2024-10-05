@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { ContextModule } from "../../context/ContextProvider";
 import TickerInfo from "./tickerInfo";
 import React from "react";
@@ -7,26 +7,36 @@ import ModalPopup from "../Modal/ModalPopup";
 import axios from "axios";
 import { Bounce, ToastContainer, toast, cssTransition } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Refresh from "../../images/icon_refresh.svg";
 import { addAutoComma, removeComma } from "../../common/Util";
+import { connect } from "react-redux";
+import {
+  addPurchase,
+  minusPurchase,
+  plusPurchase,
+} from "../../redux/counterSlice";
+import { AppDispatch, RootState } from "../../store";
 
-interface TickerProps {
-  ticker: {
-    code: string;
-    acc_trade_volume_24h: number; //거래량
-    acc_trade_price_24h: number; //거래 대금
-    high_price: number; //당일고가
-    low_price: number; //당일저가
-    trade_price: number; //현재가
-  };
-  socketRef2: any;
-  orderStatus: any;
+//리덕스: state + component props
+function mapStateToProps(state: RootState, ownProps: any) {
+  console.log(ownProps);
+  return { myProps: state };
 }
+
+//리덕스: dispatch
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+  return {
+    addPurchase: (text: string) => dispatch(addPurchase(text)),
+    plusPurchase: (text: string) => dispatch(plusPurchase(text)),
+    minusPurchase: (text: string) => dispatch(minusPurchase(text)),
+  };
+};
 
 const Ticker = ({
   ticker,
   socketRef2,
   orderStatus,
+  myProps,
+  ...rest // 리덕스: fn's
 }: TickerProps): JSX.Element => {
   const context = useContext(ContextModule);
 
@@ -52,6 +62,10 @@ const Ticker = ({
       setAbleAmount(parseInt(contextValue?.userKRW) || 0);
     }
   }, [contextValue]);
+
+  useEffect(() => {
+    setPurchase(myProps.purchase);
+  }, [myProps]);
 
   useEffect(() => {
     const chase = parseInt(removeComma(purchase));
@@ -113,24 +127,33 @@ const Ticker = ({
   };
 
   const handlePurchaseMinus = () => {
-    if (!purchase || purchase === "") {
-      return;
-    }
-    const value = parseInt(removeComma(purchase)) - 50;
-    return setPurchase(addAutoComma(value.toString()));
+    purchase && purchase !== "" && rest.minusPurchase(purchase);
   };
   const handlePurchasePluse = () => {
-    if (!purchase || purchase === "") {
-      return;
-    }
-    const value = parseInt(removeComma(purchase)) + 50;
-    return setPurchase(addAutoComma(value.toString()));
+    purchase && purchase !== "" && rest.plusPurchase(purchase);
+  };
+  const handlePurchase = (e: ChangeEvent<HTMLInputElement>) => {
+    rest.addPurchase(e.target.value);
   };
 
-  const handlePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = removeComma(e.target.value).replace(/^0+/, "");
-    setPurchase(addAutoComma(inputValue));
-  };
+  // const handlePurchaseMinus = () => {
+  //   if (!purchase || purchase === "") {
+  //     return;
+  //   }
+  //   const value = parseInt(removeComma(purchase)) - 50;
+  //   return setPurchase(addAutoComma(value.toString()));
+  // };
+  // const handlePurchasePluse = () => {
+  //   if (!purchase || purchase === "") {
+  //     return;
+  //   }
+  //   const value = parseInt(removeComma(purchase)) + 50;
+  //   return setPurchase(addAutoComma(value.toString()));
+  // };
+  // const handlePurchase = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const inputValue = removeComma(e.target.value).replace(/^0+/, "");
+  //   setPurchase(addAutoComma(inputValue));
+  // };
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderQuantity(addAutoComma(e.target.value));
   };
@@ -414,4 +437,21 @@ const Ticker = ({
   );
 };
 
-export default React.memo(Ticker);
+interface TickerProps {
+  ticker: {
+    code: string;
+    acc_trade_volume_24h: number; //거래량
+    acc_trade_price_24h: number; //거래 대금
+    high_price: number; //당일고가
+    low_price: number; //당일저가
+    trade_price: number; //현재가
+  };
+  socketRef2: any;
+  orderStatus: any;
+  myProps: RootState;
+  addPurchase: (text: string) => void;
+  minusPurchase: (text: string) => void;
+  plusPurchase: (text: string) => void;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Ticker));
